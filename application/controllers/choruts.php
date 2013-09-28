@@ -1,6 +1,6 @@
 <?php
 
-class choruts extends CI_Controller
+class choruts extends MY_Controller
 {
     public function __construct() {
         parent::__construct();

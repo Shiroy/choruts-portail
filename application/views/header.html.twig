@@ -22,9 +22,10 @@
                     {%endblock%}
                  </ul>
                 <ul class="nav pull-right">
-                    {%if isLogged == true %}
+                    {%if logged_in == true %}
+                        <li>Connecté en tant que {{login}}</li>
                     {%else%}
-                        <li><a href="#">Se connecter</a></li>
+                        <li><a href="{{login_url}}auth.php/?appli={{login_appli}}">Se connecter</a></li>
                     {%endif%}
                 </ul>
             </div>

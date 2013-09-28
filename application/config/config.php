@@ -16,6 +16,8 @@
 */
 $config['base_url']	= '';
 
+$config['login_url'] = "http://localhost/choruts/choruts-login/";
+
 /*
 |--------------------------------------------------------------------------
 | Index File
