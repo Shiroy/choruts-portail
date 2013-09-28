@@ -28,6 +28,11 @@ class Index extends CI_Model
         
         return $carroussel;
     }
+    
+    public function getNews()
+    {
+        return $this->db->query("SELECT titre, contenue, date, nom, prenom FROM site_news INNER JOIN auth_user ON auteur = auth_user.id")->result();
+    }
 }
 
 ?>
