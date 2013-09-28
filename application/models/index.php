@@ -31,7 +31,7 @@ class Index extends CI_Model
     
     public function getNews()
     {
-        return $this->db->query("SELECT titre, contenue, date, nom, prenom FROM site_news INNER JOIN auth_user ON auteur = auth_user.id")->result();
+        return $this->db->query("SELECT titre, contenue, DATE_FORMAT(date, \"%e %M %Y\") AS date, nom, prenom FROM site_news INNER JOIN auth_user ON auteur = auth_user.id")->result();
     }
 }
 
