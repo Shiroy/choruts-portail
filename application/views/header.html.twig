@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Bienvenue sur le site de chorut's</title>
-        <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
         <link rel="stylesheet" href="bootstrap/css/bootstrap-responsive.min.css"/>
         <meta charset="utf8">
     </head>
@@ -57,12 +57,13 @@
                             <li><a href="#">Partage de fichiers</a></li>
                         </ul>
                     </div>
-                </div>
-                
+                    {%block menu %}
+                    {%endblock%}
+                </div>                
                 <div class="span9">
                     {%block contenue %}
                     {%endblock%}
-                </div>
+                </div>                
             </div> 
          </div>
             

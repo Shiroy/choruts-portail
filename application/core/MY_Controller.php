@@ -12,14 +12,14 @@
  */
 class MY_Controller extends CI_Controller
 {
-    private $isLogged;
-    private $username;
+    protected $isLogged;
+    protected $username;
     
     public function __construct()
     {
         parent::__construct();
         $this->twig->set('login_url', $this->config->item('login_url'));
-        $this->twig->set('login_appli', urlencode(current_url()));
+        $this->twig->set('login_appli', urlencode(current_url()));        
         
         if($this->input->cookie('st') === false)
         {
@@ -61,6 +61,12 @@ class MY_Controller extends CI_Controller
         
         $this->twig->set('logged_in', $this->isLogged);
         $this->twig->set('login', $this->username);
+    }
+    
+    public function forceAuthentification()
+    {
+        redirect ($this->config->item('login_url')."auth.php?appli=".  urlencode(current_url()));
+        exit();
     }
 }
 

@@ -1,0 +1,40 @@
+{%extends "adminpanel.html.twig"%}
+
+{%block contenue%}
+<h1 class="text-center">Panneau d'administration</h1>
+
+<div class="row-fluid">
+    <div class="well span12">
+        <h2 class="text-center">Carroussel</h2>
+        <form action="carroussel" method="post">
+            <p>Titre : <input type="text" name="carroussel_titre" value="{{carroussel.titre}}"/></p>
+            <p>Contenue : <textarea name="carroussel_contenue" rows="4" class="control" style="width: 100%;">{{carroussel.contenue}}</textarea></p>
+            <input type="submit" class="btn btn-primary" value="Modifier"/>        
+        </form>
+        <div id="carroussel-preview"></div>
+    </div>
+</div>
+
+<div class="row-fluid">
+    <div class="well span12">
+        <h2 class="text-center">Les news</h2>
+        <a href="#" class="btn btn-success"><i class="icon-plus icon-white"></i> Publier une news</a><br/><br/>
+        <table class="table">
+            <tr>
+                <th>Titre</th>
+                <th>Auteur</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+            {%for new in news%}
+            <tr>
+                <td>{{new.titre}}</td>
+                <td>{{new.prenom}} {{new.nom}}</td>
+                <td>{{new.date}}</td>
+                <td><a href="#" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> <a href="#" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a></td>
+            </tr>
+            {%endfor%}
+        </table>
+    </div>
+</div>
+{%endblock%}
