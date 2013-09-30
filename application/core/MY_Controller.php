@@ -61,6 +61,8 @@ class MY_Controller extends CI_Controller
         
         $this->twig->set('logged_in', $this->isLogged);
         $this->twig->set('login', $this->username);
+        
+        $this->twig->set('base_url', $this->config->item('base_url'));
     }
     
     public function forceAuthentification()

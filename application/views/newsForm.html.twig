@@ -1,0 +1,15 @@
+{%extends "adminpanel.html.twig"%}
+
+{%block contenue %}
+<h2 class="text-center">Panneau d'administration</h2>
+<h3 class="text-center">Publier une news</h3>
+{#Editer une news #}
+
+<form method="post" action="{{base_url}}/adminpanel/publishnews">
+    <p>Titre : <input type="text" name="news_title"/></p>
+    <textarea style="width: 100%;" name="news_content" rows="5"></textarea>
+    <input type="submit" value="Publier" class="btn btn-primary"/>
+</form>
+
+<p>Utiliser le BBCODE pour mettre en forme la news. Exemple :</p>
+{%endblock %}

@@ -31,6 +31,11 @@ class adminpanel extends MY_Controller
         
         $this->twig->render("adminpanel-index.html.twig");
     }
+    
+    public function addnews()
+    {
+        $this->twig->render('newsForm.html.twig');
+    }
 }
 
 ?>
