@@ -36,6 +36,24 @@ class adminpanel extends MY_Controller
     {
         $this->twig->render('newsForm.html.twig');
     }
+    
+    public function publishNews()
+    {
+        echo sizeof($_POST);
+        $title = $this->input->post('news_title');
+        $content = $this->input->post('news_content');
+        echo "$title<br/>$content";
+        
+        if($title != false && $content != false)
+        {
+            $title = htmlspecialchars($title);
+            $content = htmlspecialchars($content);
+            
+            $this->admin_panel->addNew($title, $content, $this->userId);
+        }
+        
+        //redirect($this->config->item('base_url')."/adminpanel");
+    }
 }
 
 ?>

@@ -14,7 +14,11 @@ class MY_Controller extends CI_Controller
 {
     protected $isLogged;
     protected $username;
-    
+    protected $userId;
+    protected $nom;
+    protected $prenom;
+
+
     public function __construct()
     {
         parent::__construct();
@@ -50,6 +54,10 @@ class MY_Controller extends CI_Controller
                 {
                     $this->isLogged = true;
                     $this->username = $auth_response->username;
+                    $userinfo = $this->user->getUserInfo($this->username);
+                    $this->userId = $userinfo->id;
+                    $this->nom = $userinfo->nom;
+                    $this->prenom = $userinfo->prenom;
                 }
                 else
                 {
