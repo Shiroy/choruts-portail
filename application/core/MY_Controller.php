@@ -12,70 +12,38 @@
  */
 class MY_Controller extends CI_Controller
 {
-    protected $isLogged;
-    protected $username;
-    protected $userId;
-    protected $nom;
-    protected $prenom;
+    protected $isLogged = false;
+    protected $username = "";
+    protected $userId = 0;
+    protected $nom = "";
+    protected $prenom = "";
 
 
     public function __construct()
     {
         parent::__construct();
-        $this->twig->set('login_url', $this->config->item('login_url'));
-        $this->twig->set('login_appli', urlencode(current_url()));        
         
-        if($this->input->cookie('st') === false)
+        $userId = $this->session->userdata("user_id");
+        if($userId !== false) //The user is authenticated
         {
-            redirect ($this->config->item('login_url')."requestTicket.php?appli=".urlencode(current_url()), 'location', 301);
-            exit();
-        }
-        
-        $st = $this->input->cookie('st');
-        $this->input->set_cookie('st', 0, false);
-        if($st == "0") //Utilisateur anonyme
-        {
-            $this->isLogged = false;
-            $this->username = "";
-        }
-        else
-        {            
-            $validation = file_get_contents($this->config->item('login_url')."validate.php?ticket=$st");
-            //var_dump($validation);
-            if(strlen($validation) == 0)
-            {
-                $this->isLogged = false;
-                $this->username = "";
-            }
-            else
-            {
-                $auth_response = json_decode($validation);
-                if($auth_response->sucess != 0)
-                {
-                    $this->isLogged = true;
-                    $this->username = $auth_response->username;
-                    $userinfo = $this->user->getUserInfo($this->username);
-                    $this->userId = $userinfo->id;
-                    $this->nom = $userinfo->nom;
-                    $this->prenom = $userinfo->prenom;
-                }
-                else
-                {
-                    $this->isLogged = false;
-                    $this->username = "";
-                }
-            }
+            $this->userId = $userId;
+            $this->isLogged = true;
+            $userInfo = $this->user->getUserInfo($userId);
+            $this->nom = $userInfo->nom;
+            $this->prenom = $userInfo->prenom;
         }
         
         $this->twig->set('logged_in', $this->isLogged);
         $this->twig->set('login', $this->username);
+        $this->twig->set('prenom', $this->prenom);
+        $this->twig->set('nom', $this->nom);
         
         $this->twig->set('base_url', $this->config->item('base_url'));
     }
     
     public function forceAuthentification()
     {
-        redirect ($this->config->item('login_url')."auth.php?appli=".  urlencode(current_url()));
+        redirect ();
         exit();
     }
 }
