@@ -43,7 +43,7 @@ class MY_Controller extends CI_Controller
     
     public function forceAuthentification()
     {
-        redirect ();
+        redirect ($this->config->item('base_url')."/auth/login");
         exit();
     }
 }

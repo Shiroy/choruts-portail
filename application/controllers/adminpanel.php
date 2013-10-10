@@ -16,10 +16,15 @@ class adminpanel extends MY_Controller
     {
         parent::__construct();
         
-        $this->load->model("admin_panel");
+        $this->load->model("admin_panel");        
         
         if(!$this->isLogged)
-            $this->forceAuthentification ();
+            $this->forceAuthentification();
+        
+        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL)) 
+        {
+            $this->_notAllowed();            
+        }                
     }
     
     public function index()
@@ -39,20 +44,24 @@ class adminpanel extends MY_Controller
     
     public function publishNews()
     {
-        echo sizeof($_POST);
         $title = $this->input->post('news_title');
         $content = $this->input->post('news_content');
-        echo "$title<br/>$content";
         
         if($title != false && $content != false)
         {
             $title = htmlspecialchars($title);
             $content = htmlspecialchars($content);
             
-            $this->admin_panel->addNew($title, $content, $this->userId);
+            $this->admin_panel->addNews($title, $content, $this->userId);
         }
         
         //redirect($this->config->item('base_url')."/adminpanel");
+    }
+    
+    function _notAllowed()
+    {
+        $this->twig->render("adminpanel-access-error.html.twig");
+        exit();
     }
 }
 

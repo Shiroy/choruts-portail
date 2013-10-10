@@ -362,3 +362,6 @@ $config['proxy_ips'] = '';
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */
+
+//Custom config option for the portail
+define("USER_RIGHT_ACCES_ADMIN_PANEL", 0x1);

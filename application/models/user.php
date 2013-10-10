@@ -34,6 +34,16 @@ class user extends CI_Model
         
         return $users->row()->id; //Return user id if auth success
     }
+    
+    public function isAllowedTo($user, $right)
+    {
+        /*Description sommaire de la requete : 
+         * Selectionne tous les utilisateurs qui appartiennent à un group ayant les droits $right et vérifie que $user et dans la liste
+         */
+        $isUserAllowed = $this->db->query("SELECT 1 FROM auth_user WHERE id = $user AND id IN (SELECT userId FROM user_groups_members WHERE groupId IN (SELECT id FROM `user_groups` WHERE rights & $right))");
+        
+        return ($isUserAllowed->num_rows() != 0); //S'il y a un resultat, alors l'utilisateur a les autorisations nécéssaires
+    }
 }
 
 ?>
