@@ -18,6 +18,9 @@ class auth extends MY_Controller
     
     public function login()
     {
+        if($this->isLogged)
+            redirect ($this->config->item('base_url'));
+        
         if($this->input->post() === false)
             $this->twig->render("login-form.html.twig");
         else
@@ -36,6 +39,12 @@ class auth extends MY_Controller
             
             $this->twig->render("login-form.html.twig"); //If auth sucess, this line should not be executed
         }
+    }
+    
+    public function logout()
+    {
+        $this->session->unset_userdata("user_id");
+        redirect($this->config->item('base_url'));
     }
 }
 
