@@ -12,14 +12,18 @@ class admin_panel extends CI_Model
     }
     
     public function addNews($title, $content, $userId)
-    {
-        echo $userId;
+    {        
         $this->db->query("INSERT INTO site_news(titre, contenue, date, auteur) VALUES (\"".$this->db->escape_str($title)."\", \"".$this->db->escape_str($content)."\", NOW(), $userId)");
     }
     
     public function updateNews($title, $content, $newsId)
     {
         $this->db->query("UPDATE site_news SET titre=?, contenue=? WHERE id=?", array($title, $content, $newsId));
+    }
+    
+    public function deleteNews($newsId)
+    {
+        $this->db->query("DELETE FROM site_news WHERE id = ?", array($newsId));
     }
 
     public function update_carroussel($title, $content)

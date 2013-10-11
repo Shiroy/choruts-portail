@@ -57,7 +57,7 @@ class adminpanel extends MY_Controller
             $this->admin_panel->addNews($title, $content, $this->userId);
         }
         
-        //redirect($this->config->item('base_url')."/adminpanel");
+        redirect($this->config->item('base_url')."/adminpanel");
     }
     
     public function editNews($newsId)
@@ -92,6 +92,15 @@ class adminpanel extends MY_Controller
         }
         
         redirect($this->config->item('base_url')."/adminpanel");
+    }
+    
+    public function delnews($newsId)
+    {
+        if(!is_numeric($newsId))
+            return;
+        
+        $this->admin_panel->deleteNews($newsId);
+        redirect ($this->config->item('base_url')."/adminpanel");
     }
     
     public function carroussel()
