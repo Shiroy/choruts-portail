@@ -17,6 +17,7 @@ class MY_Controller extends CI_Controller
     protected $userId = 0;
     protected $nom = "";
     protected $prenom = "";
+    protected $allowAdminPanel = false;
 
 
     public function __construct()
@@ -31,12 +32,14 @@ class MY_Controller extends CI_Controller
             $userInfo = $this->user->getUserInfo($userId);
             $this->nom = $userInfo->nom;
             $this->prenom = $userInfo->prenom;
+            $this->allowAdminPanel = $this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL);
         }
         
         $this->twig->set('logged_in', $this->isLogged);
         $this->twig->set('login', $this->username);
         $this->twig->set('prenom', $this->prenom);
         $this->twig->set('nom', $this->nom);
+        $this->twig->set('admin_panel_acces', ($this->isLogged && $this->allowAdminPanel) ? 1 : 0);
         
         $this->twig->set('base_url', $this->config->item('base_url'));
     }

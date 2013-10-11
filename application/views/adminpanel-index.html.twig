@@ -6,7 +6,7 @@
 <div class="row-fluid">
     <div class="well span12">
         <h2 class="text-center">Carroussel</h2>
-        <form action="carroussel" method="post">
+        <form action="{{base_url}}/adminpanel/carroussel" method="post">
             <p>Titre : <input type="text" name="carroussel_titre" value="{{carroussel.titre}}"/></p>
             <p>Contenue : <textarea name="carroussel_contenue" rows="4" class="control" style="width: 100%;">{{carroussel.contenue}}</textarea></p>
             <input type="submit" class="btn btn-primary" value="Modifier"/>        
@@ -31,7 +31,7 @@
                 <td>{{new.titre}}</td>
                 <td>{{new.prenom}} {{new.nom}}</td>
                 <td>{{new.date}}</td>
-                <td><a href="#" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> <a href="#" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a></td>
+                <td><a href="{{base_url}}/adminpanel/editNews/{{new.id}}" class="btn btn-warning"><i class="icon-pencil icon-white"></i> Editer</a> <a href="#" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a></td>
             </tr>
             {%endfor%}
         </table>

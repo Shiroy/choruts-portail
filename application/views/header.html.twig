@@ -15,10 +15,10 @@
             <div class="navbar-inner">
                 <a class="brand" href="#">Chorut's</a>
                 <ul class="nav">
-                    <li class="active"><a href="#">Accueil</a></li>
-                    {%if isAdmin == true %}
-                        <li><a href="#">Panneau d'administration</a></li>
-                        <li><a href="#">Mailing list</a></li>
+                    <li {%if is_admin_panel != 1 %} class="active" {%endif%}><a href="{{base_url}}">Accueil</a></li>
+                    {%if admin_panel_acces == 1 %}
+                        <li {%if is_admin_panel == 1 %} class="active" {%endif%}><a href="{{base_url}}/adminpanel">Panneau d'administration</a></li>
+                        <li><a href="http://assos.utc.fr/gesmail">Mailing list</a></li>
                     {%endif%}
                     {%block navbar %}
                     {%endblock%}

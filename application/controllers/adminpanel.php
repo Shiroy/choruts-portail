@@ -21,10 +21,12 @@ class adminpanel extends MY_Controller
         if(!$this->isLogged)
             $this->forceAuthentification();
         
-        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL)) 
+        if(!$this->allowAdminPanel) 
         {
             $this->_notAllowed();            
-        }                
+        }
+        
+        $this->twig->set("is_admin_panel", 1);
     }
     
     public function index()
@@ -47,7 +49,7 @@ class adminpanel extends MY_Controller
         $title = $this->input->post('news_title');
         $content = $this->input->post('news_content');
         
-        if($title != false && $content != false)
+        if($title !== false && $content !== false)
         {
             $title = htmlspecialchars($title);
             $content = htmlspecialchars($content);
@@ -58,6 +60,51 @@ class adminpanel extends MY_Controller
         //redirect($this->config->item('base_url')."/adminpanel");
     }
     
+    public function editNews($newsId)
+    {
+        if(!is_numeric($newsId))
+            return;
+        
+        $this->twig->set("edit", $newsId);
+        $news = $this->admin_panel->getNewsForEdit($newsId);
+        $this->twig->set("news", $news);
+        $this->twig->render('newsForm.html.twig');
+    }
+    
+    public function updatenews()
+    {
+        if($this->input->post("news_id") === false) //Formulaire cheaté
+            return;
+        
+        $newsId = $this->input->post('news_id');
+        if(!is_numeric($newsId))
+            return;
+        
+        $title = $this->input->post('news_title');
+        $content = $this->input->post('news_content');
+        
+        if($title !== false && $content !== false)
+        {
+            $title = htmlspecialchars($title);
+            $content = htmlspecialchars($content);
+            
+            $this->admin_panel->updateNews($title, $content, $newsId);
+        }
+        
+        redirect($this->config->item('base_url')."/adminpanel");
+    }
+    
+    public function carroussel()
+    {
+        $title = $this->input->post('carroussel_titre');
+        $content = $this->input->post('carroussel_contenue');
+        
+        if($title !== false && $content !== false)
+            $this->admin_panel->update_carroussel($title, $content);
+        
+        redirect ($this->config->item('base_url')."/adminpanel");
+    }
+            
     function _notAllowed()
     {
         $this->twig->render("adminpanel-access-error.html.twig");
