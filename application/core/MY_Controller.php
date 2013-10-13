@@ -10,6 +10,12 @@
  *
  * @author antoine
  */
+
+function bbcode_parse($str)
+{
+    return $this->bbcode->parse($str);
+}
+
 class MY_Controller extends CI_Controller
 {
     protected $isLogged = false;

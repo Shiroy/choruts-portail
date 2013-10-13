@@ -14,7 +14,7 @@
     {%for new in news%}
     <div class="well">
         <h3 class="text-center">{{new.titre}}</h3>
-        <p>{{new.contenue}}</p>
+        <p>{{new.contenue|raw}}</p>
         <p class="text-right">Par {{new.prenom}} {{new.nom}}, le {{new.date}}</p>
     </div>
     {%endfor%}

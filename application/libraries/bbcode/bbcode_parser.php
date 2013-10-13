@@ -483,7 +483,7 @@
 
 define('SECURITY_CODE', __LINE__);
 
-error_reporting(E_ALL ^ E_NOTICE);
+//error_reporting(E_ALL ^ E_NOTICE);
 
 
 
