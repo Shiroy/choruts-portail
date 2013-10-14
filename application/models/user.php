@@ -44,6 +44,19 @@ class user extends CI_Model
         
         return ($isUserAllowed->num_rows() != 0); //S'il y a un resultat, alors l'utilisateur a les autorisations nécéssaires
     }
+    
+    public function getUsers($page, $userPerPage)
+    {
+        $result = array();
+        $rows = $this->db->query("SELECT COUNT(*) AS count FROM auth_user")->result();
+        $result['count'] = $rows[0]->count;
+        
+        $firtstIndex = ($page-1) * $userPerPage;
+        
+        $result['users'] = $this->db->query("SELECT id, user, nom, prenom, mail FROM auth_user LIMIT $firtstIndex, $userPerPage")->result();
+        
+        return $result;
+    }
 }
 
 ?>

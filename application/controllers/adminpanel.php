@@ -113,6 +113,24 @@ class adminpanel extends MY_Controller
         
         redirect ($this->config->item('base_url')."/adminpanel");
     }
+    
+    public function users($page = 1)
+    {
+        if($page < 1)
+            $page = 1;
+        
+        define("USER_PER_PAGE", 20);
+        
+        $users = $this->user->getUsers(1, USER_PER_PAGE);
+        
+        $nbPage = ($users['count'] / USER_PER_PAGE) + 1;        
+        
+        $this->twig->set("nb_page", $nbPage);
+        $this->twig->set("current_page", $page);
+        $this->twig->set("users", $users['users']);
+        
+        $this->twig->render("adminpanel-users.html.twig");        
+    }
             
     function _notAllowed()
     {
