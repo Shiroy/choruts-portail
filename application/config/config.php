@@ -365,3 +365,4 @@ $config['proxy_ips'] = '';
 
 //Custom config option for the portail
 define("USER_RIGHT_ACCES_ADMIN_PANEL", 0x1);
+define("USER_RIGHT_EDIT_MEMBERS", 0x2);

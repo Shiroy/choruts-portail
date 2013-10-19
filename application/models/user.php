@@ -57,6 +57,16 @@ class user extends CI_Model
         
         return $result;
     }
+    
+    public function profile($userId)
+    {
+        $result = $this->db->query("SELECT user, nom, prenom, mail, telephone, type_voix FROM auth_user WHERE id=?", array($userId));
+        
+        if($result->num_rows() == 0)
+            return false;
+        
+        return $result->row();
+    }
 }
 
 ?>
