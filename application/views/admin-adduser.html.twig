@@ -1,0 +1,23 @@
+{% extends "adminpanel.html.twig" %}
+
+{%block contenue%}
+<h1 class="text-center">Ajouter un utilisateur</h1>
+
+<p class="text-warning">Les étudiants et membres du personnel de l'UTC <strong>doivent</strong> créer leur compte eux-même.</p>
+
+<form method="post" action="{{base_url}}/adminpanel/adduser">
+    <div class="row-fluid">
+        <div class="well span4 offset4">
+            <p class="text-center">Qui est-ce ?</p>
+            <input type="text" placeholder="Nom d'utilisateur" name="username" value="{{form_value.username}}"/>
+            <input type="password" placeholder="Mot de passe" name="userpass" value="{{form_value.userpass}}"/>
+            <input type="text" name="nom" placeholder="Nom" value="{{form_value.nom}}"/>
+            <input type="text" name="prenom" placeholder="Prenom" value="{{form_value.prenom}}"/>
+            <input type="email" name="mail" placeholder="E-mail" value="{{form_value.mail}}"/><br/>
+            <input type="submit" value="Ajouter" class="btn btn-primary"/>
+        </div>
+    </div>        
+</form>
+
+{{form_error|raw}}
+{%endblock%}

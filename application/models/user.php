@@ -67,6 +67,15 @@ class user extends CI_Model
         
         return $result->row();
     }
+    
+    public function addUser($user, $pass, $email, $nom, $prenom)
+    {
+        //Hashage du mot de passe
+        
+        $hash = strtoupper(sha1(strtoupper($user).":".$pass));
+        
+        $this->db->query("INSERT INTO auth_user(user, password, mail, nom, prenom) VALUES (?, ?, ?, ?, ?)", array($user, $hash, $email, $nom, $prenom));
+    }
 }
 
 ?>

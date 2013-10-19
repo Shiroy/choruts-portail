@@ -131,6 +131,40 @@ class adminpanel extends MY_Controller
         
         $this->twig->render("adminpanel-users.html.twig");        
     }
+    
+    public function adduser()
+    {
+        if($this->input->post() === false)
+        {
+            $this->twig->render("admin-adduser.html.twig");
+        }
+        else
+        {
+            $this->load->library("form_validation");
+            
+            $this->form_validation->set_rules('username', "nom d'utilisateur", 'required|is_unique[auth_user.user]|alpha');
+            $this->form_validation->set_rules('userpass', "mot de passe", 'required');
+            $this->form_validation->set_rules('nom', 'nom', 'required');
+            $this->form_validation->set_rules('prenom', 'prenom', 'required');
+            $this->form_validation->set_rules('mail', "e-mail", 'required|is_unique[auth_user.mail]|valid_email');
+            
+            if($this->form_validation->run() == false)
+            {
+                $this->twig->set('form_error', validation_errors("<p class='text-error'>", "</p>"));
+                $this->twig->set('form_value', $this->input->post());
+                $this->twig->render("admin-adduser.html.twig");
+                return;
+            }
+            
+            $user = $this->input->post("username");
+            $pass = $this->input->post("userpass");
+            $mail = $this->input->post("mail");
+            $nom = $this->input->post("nom");
+            $prenom = $this->input->post("prenom");
+            
+            $this->user->addUser($user, $pass, $mail, $nom, $prenom);
+        }
+    }
             
     function _notAllowed()
     {
