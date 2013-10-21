@@ -3,6 +3,9 @@
 {%block contenue %}
 <div class="offset4 well span4">
     <h2 class="text-center">Connexion</h2>
+    
+    <h3 class="text-center"><a href="{{base_url}}/auth/cas">Je susi étudiant ou membre du personnel de l'UTC</a></h3>
+    
     {%if error == 1 %}
     <p class="text-error">Les informations indiquées ne permettent pas de vous authentifier</p>
     {%endif%}

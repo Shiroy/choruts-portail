@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('Twig', 'database', 'session', 'bbcode');
+$autoload['libraries'] = array('Twig', 'database', 'session', 'bbcode', 'cas');
 
 
 /*
@@ -80,7 +80,7 @@ $autoload['helper'] = array('url');
 |
 */
 
-$autoload['config'] = array();
+$autoload['config'] = array('cas');
 
 
 /*

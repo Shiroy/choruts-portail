@@ -81,6 +81,22 @@ class user extends CI_Model
     {
         $this->db->query("UPDATE auth_user SET nom=?, prenom=?, mail=?, telephone=?, type_voix=? WHERE id=?", array($nom, $prenom, $mail, $telephone, $pupitre, $userId));
     }
+    
+    public function casAccountExist($casAccount)
+    {
+        $query = $this->db->query("SELECT id FROM auth_user WHERE login_etu=?", array($casAccount));
+        
+        if($query->num_rows() == 0)
+            return false;
+        
+        return $query->row();
+    }
+    
+    public function addCasAccount($casAccount, $nom, $prenom)
+    {
+        $mail = $casAccount."@utc.fr";
+        $this->db->query("INSERT INTO auth_user(user, password, nom, prenom, mail, login_etu) VALUES (?, 'CAS', ?, ?, ?, ?)", array($casAccount, $nom, $prenom, $mail, $casAccount));
+    }
 }
 
 ?>

@@ -1,0 +1,17 @@
+{%extends "user.html.twig" %}
+
+{%block contenue %}
+<h1 class="text-center">Informations complémentaires</h1>
+
+<p>C'est la première fois que vous vous connectez sur le site de Chorut's. Veuillez renseigner votre nom et prenom afin de completer la procédure d'inscription. <span class="text-warning">Si vous ne souhaitez pas que nous conservions ces informations, fermez tout simplement cette page. L'inscription sera annulée et aucune de vos donnée ne sera enregistrée dans notre base de données</span></p>
+<div class="span2 offset5">
+    <form method="post" action="{{base_url}}/auth/cas">
+        <input type="text" name="prenom" placeholder="Prenom" value="{{post.prenom}}"/><br/>
+        <input type="text" name="nom" placeholder="Nom" value="{{post.nom}}"/><br/>
+        <input type="submit" value="Terminer l'inscription" class="btn btn-primary"/>
+    </form>
+        
+    {{form_error|raw}}
+</div>
+
+{%endblock%}
