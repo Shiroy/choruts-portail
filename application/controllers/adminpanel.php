@@ -57,7 +57,7 @@ class adminpanel extends MY_Controller
             $this->admin_panel->addNews($title, $content, $this->userId);
         }
         
-        redirect($this->config->item('base_url')."/adminpanel");
+        $this->redirect_meta("La news a été correctement publiée.", $this->config->item('base_url')."/adminpanel");
     }
     
     public function editNews($newsId)
@@ -91,7 +91,7 @@ class adminpanel extends MY_Controller
             $this->admin_panel->updateNews($title, $content, $newsId);
         }
         
-        redirect($this->config->item('base_url')."/adminpanel");
+        $this->redirect_meta("La news a été correctement mise à jour.", $this->config->item('base_url')."/adminpanel");
     }
     
     public function delnews($newsId)
@@ -100,7 +100,7 @@ class adminpanel extends MY_Controller
             return;
         
         $this->admin_panel->deleteNews($newsId);
-        redirect ($this->config->item('base_url')."/adminpanel");
+        $this->redirect_meta ("La news a bien été supprimée", $this->config->item('base_url')."/adminpanel");
     }
     
     public function carroussel()
@@ -111,7 +111,7 @@ class adminpanel extends MY_Controller
         if($title !== false && $content !== false)
             $this->admin_panel->update_carroussel($title, $content);
         
-        redirect ($this->config->item('base_url')."/adminpanel");
+        $this->redirect_meta ("Le carroussel a été correctement mis à jour", $this->config->item('base_url')."/adminpanel");
     }
     
     public function users($page = 1)

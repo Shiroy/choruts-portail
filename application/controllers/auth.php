@@ -44,7 +44,7 @@ class auth extends MY_Controller
     public function logout()
     {
         $this->session->unset_userdata("user_id");
-        redirect($this->config->item('base_url'));
+        $this->redirect_meta("Vous êtes à présent connecté.", $this->config->item('base_url'));
     }
 }
 
