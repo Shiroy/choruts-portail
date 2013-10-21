@@ -55,6 +55,13 @@ class MY_Controller extends CI_Controller
         redirect ($this->config->item('base_url')."/auth/login");
         exit();
     }
+    
+    public function redirect_meta($msg, $link) //Efectue une redirection meta
+    {
+        $this->twig->set("redirect_msg", $msg);
+        $this->twig->set("redirect_url", $link);
+        $this->twig->render("redirect_meta.html.twig");
+    }
 }
 
 ?>

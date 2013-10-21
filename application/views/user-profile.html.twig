@@ -3,6 +3,11 @@
 {%block contenue%}
 <div class="row-fluid"><h1 class="text-center">Profil d'un utilisateur</h1></div>
 
+{%if editable==true %}
+<form method="post" action="{{base_url}}/users/updateprofile">
+    <input type="hidden" value="{{userId}}" name="userId"/>
+{%endif%}
+
 <div class="row-fluid">
     <table class="table">
         <tr>
@@ -11,24 +16,39 @@
         </tr>
         <tr>
             <td>Prenom</td>
-            <td>{{profile.prenom}}</td>        
+            <td>{%if editable==true %} <input type="text" value="{{profile.prenom}}" name="prenom"/> {%else%} {{profile.prenom}} {%endif%}</td>        
         </tr>
         <tr>
             <td>Nom</td>
-            <td>{{profile.nom}}</td>        
+            <td>{%if editable==true %} <input type="text" value="{{profile.nom}}" name="nom"/> {%else%} {{profile.nom}} {%endif%}</td>        
         </tr>
         <tr>
             <td>E-mail</td>
-            <td><a href="mailto:{{profile.mail}}">{{profile.mail}}</a></td>
+            <td>{%if editable==true %} <input type="text" value="{{profile.mail}}" name="mail"/> <a href="mailto:{{profile.mail}}">M'écrire</a> {%else%} <a href="mailto:{{profile.mail}}">{{profile.mail}}</a>{%endif%}</td>
         </tr>
         <tr>
             <td>Téléphone</td>
-            <td>{%if profile.telephone == "" %} Non renseigné {%else%} {{profile.telephone}} {%endif%}</td>
+            <td>{%if editable==true %} <input type="text" value="{{profile.telephone}}" name="telephone"/> {%else%} {%if profile.telephone == "" %} Non renseigné {%else%} {{profile.telephone}} {%endif%} {%endif%}</td>
         </tr>
         <tr>
             <td>Pupitre</td>
-            <td>{{profile.type_voix}}</td>
+            <td>{%if editable==true %}
+                <select name="pupitre">
+                    <option value="soprano" {%if profile.type_voix == "soprano"%} selected="selected" {%endif%}>soprano</option>
+                    <option value="alto" {%if profile.type_voix == "alto"%} selected="selected" {%endif%}>alto</option>
+                    <option value="tenor" {%if profile.type_voix == "tenor"%} selected="selected" {%endif%}>tenor</option>
+                    <option value="basse" {%if profile.type_voix == "basse"%} selected="selected" {%endif%}>basse</option>
+                </select> {%else%} {{profile.type_voix}} {%endif%}</td>
         </tr>
     </table>
 </div>
+    
+    {%if edited==true %}
+    <p class="text-success">Votre profil a bien été mis à jour</p>
+    {%endif%}
+    
+    {%if editable==true %}
+    <input class="btn btn-primary" type="submit" value="Mettre à jour"/>    
+    </form>
+    {%endif%}
 {%endblock%}

@@ -1,0 +1,10 @@
+{%extends "header.html.twig"%}
+
+{%block header%}
+<meta http-equiv="refresh" content="5,URL={{redirect_url}}"/>
+{%endblock%}
+
+{%block contenue%}
+<p class="text-center">{{redirect_msg}}<br/>Vous allez être redirigé dans quelques secondes. Si ce n'est pas le cas, cliquez sur <a href="{{redirect_url}}">continuer</a></p>
+
+{%endblock%}

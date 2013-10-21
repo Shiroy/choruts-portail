@@ -14,9 +14,6 @@ class users extends MY_Controller{
    
     public function __construct() {
         parent::__construct();
-        
-        if(!$this->isLogged)
-            $this->forceAuthentification ();
     }
     
     public function profile($userId)
@@ -31,11 +28,56 @@ class users extends MY_Controller{
         $this->twig->set("profile", $profile);
         
         if($userId == $this->userId || $this->user->isAllowedTo($this->userId, USER_RIGHT_EDIT_MEMBERS))
+        {
             $this->twig->set("editable", true);
+            $this->twig->set("userId", $userId);
+        }
         else
             $this->twig->set("editable", false);
         
         $this->twig->render("user-profile.html.twig");
+    }
+    
+    public function updateprofile()
+    {
+        if($this->input->post() === false)
+            return;
+        
+        if(!$this->isLogged)
+            $this->forceAuthentification ();        
+        
+        $this->load->library("form_validation");
+        
+        if($this->input->post("userId") === false)
+            return false;
+        
+        $userId = $this->input->post("userId");
+        if(!is_numeric($userId))
+            return;
+        
+        if($userId != $this->userId && !$this->user->isAllowedTo($this->userId, USER_RIGHT_EDIT_MEMBERS))
+            return;
+        
+        $this->form_validation->set_rules('nom', 'nom', 'required|alpha');
+        $this->form_validation->set_rules('prenom', 'prenom', 'required|alpha');
+        $this->form_validation->set_rules('mail', "e-mail", 'required|valid_email');
+        $this->form_validation->set_rules('telephone', 'numéros de téléphone', 'numeric|exact_length[10]');
+        
+        if($this->form_validation->run() == false)
+        {
+            redirect($this->config->item('base_url')."/users/profile/$userId");
+            exit();            
+        }
+        
+        $nom = $this->input->post('nom');
+        $prenom = $this->input->post('prenom');
+        $mail = $this->input->post('mail');
+        $telephone = $this->input->post('telephone');
+        $pupitre = $this->input->post('pupitre');
+        
+        $this->user->updateUser($userId, $nom, $prenom, $mail, $telephone, $pupitre);
+        
+        $this->redirect_meta("Votre profil a bien été mis à jour", $this->config->item('base_url')."/users/profile/$userId");
     }
 }
 

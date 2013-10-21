@@ -76,6 +76,11 @@ class user extends CI_Model
         
         $this->db->query("INSERT INTO auth_user(user, password, mail, nom, prenom) VALUES (?, ?, ?, ?, ?)", array($user, $hash, $email, $nom, $prenom));
     }
+    
+    public function updateUser($userId, $nom, $prenom, $mail, $telephone, $pupitre)
+    {
+        $this->db->query("UPDATE auth_user SET nom=?, prenom=?, mail=?, telephone=?, type_voix=? WHERE id=?", array($nom, $prenom, $mail, $telephone, $pupitre, $userId));
+    }
 }
 
 ?>

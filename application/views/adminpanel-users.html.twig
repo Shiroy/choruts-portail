@@ -23,6 +23,7 @@
         <th>Prenom</th>
         <th>Nom</th>
         <th>E-mail</th>
+        <th>Photo</th>
     </tr>
     
     {%for user in users %}
@@ -31,6 +32,7 @@
         <td>{{user.prenom}}</td>
         <td>{{user.nom}}</td>
         <td>{{user.mail}}</td>
+        <td>La photo</td>
     </tr>
     {%endfor%}
 </table>
