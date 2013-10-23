@@ -24,6 +24,7 @@ class MY_Controller extends CI_Controller
     protected $nom = "";
     protected $prenom = "";
     protected $allowAdminPanel = false;
+    protected $allowPrivatePart = false;
 
 
     public function __construct()
@@ -39,6 +40,7 @@ class MY_Controller extends CI_Controller
             $this->nom = $userInfo->nom;
             $this->prenom = $userInfo->prenom;
             $this->allowAdminPanel = $this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL);
+            $this->allowPrivatePart = $this->user->isAllowedTo($this->userId, USER_RIGHT_VIEW_MEMBER_PART);
         }
         
         $this->twig->set('logged_in', $this->isLogged);
@@ -46,6 +48,7 @@ class MY_Controller extends CI_Controller
         $this->twig->set('prenom', $this->prenom);
         $this->twig->set('nom', $this->nom);
         $this->twig->set('admin_panel_acces', ($this->isLogged && $this->allowAdminPanel) ? 1 : 0);
+        $this->twig->set("view_private_part", $this->allowPrivatePart);
         
         $this->twig->set('base_url', $this->config->item('base_url'));
     }

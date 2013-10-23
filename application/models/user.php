@@ -115,6 +115,11 @@ class user extends CI_Model
         return $groupe;
     }
     
+    public function updateGroupe($groupId, $name, $right)
+    {
+        $this->db->query("UPDATE user_groups SET nom=?, rights=? WHERE id=?", array($name, $right, $groupId));
+    }
+    
     public function getGroupNotIn($userId)
     {
         return $this->db->query("SELECT id, nom FROM user_groups WHERE id NOT IN (SELECT groupId FROM user_groups_members WHERE userId = ?)", array($userId))->result();

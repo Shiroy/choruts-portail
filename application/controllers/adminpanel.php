@@ -192,11 +192,11 @@ class adminpanel extends MY_Controller
         {
             $this->twig->set("right_edit_members", true);
         }
-        if($group->right & USER_RIGHT_VIEW_MEMBER_PART)
+        if($group->rights & USER_RIGHT_VIEW_MEMBER_PART)
         {
-            $this->twig->set("right_view_member_part", true);
+            $this->twig->set("right_member_part", true);
         }
-        if($group->right & USER_RIGHT_PUBLISH_NEWS)
+        if($group->rights & USER_RIGHT_PUBLISH_NEWS)
         {
             $this->twig->set("right_publish_news", true);
         }
@@ -211,7 +211,25 @@ class adminpanel extends MY_Controller
         if($this->input->post("group_id") === false)
             show_404();
         
+        $groupId = $this->input->post("group_id");
         
+        $right = 0;
+        if($this->input->post("right-admin") !== false)
+            $right |= USER_RIGHT_ACCES_ADMIN_PANEL;
+        if($this->input->post("right-edit-members") !== false)
+            $right |= USER_RIGHT_EDIT_MEMBERS;
+        if($this->input->post("right-member-part") !== false)
+            $right |= USER_RIGHT_VIEW_MEMBER_PART;
+        if($this->input->post("right-publish-news") !== false)
+            $right |= USER_RIGHT_PUBLISH_NEWS;
+        
+        $name = $this->input->post("name");
+        if($name !== false)
+        {                       
+            $this->user->updateGroupe($groupId, $name, $right);
+        }
+        
+        $this->redirect_meta("Le groupe a été correctement mis à jour.", $this->config->item('base_url')."/adminpanel/groupe/$groupId");
     }
     
     function groupeaddfromprofile($userId)
