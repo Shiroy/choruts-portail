@@ -18,7 +18,7 @@ class users extends MY_Controller{
     
     public function profile($userId)
     {
-        if(!$this->isLogged || !$this->user->isAllowedTo($this->userId, USER_RIGHT_VIEW_MEMBER_PART))
+        if(!$this->isLogged || (!$this->user->isAllowedTo($this->userId, USER_RIGHT_VIEW_MEMBER_PART) && $userId != $this->userId))
             $this->forceAuthentification ();
         
         if(!is_numeric($userId))
