@@ -163,6 +163,8 @@ class adminpanel extends MY_Controller
             $prenom = $this->input->post("prenom");
             
             $this->user->addUser($user, $pass, $mail, $nom, $prenom);
+            
+            $this->redirect_meta("L'utilisateur a été correctement créer", $this->config->item('base_url')."/adminpanel/users");
         }
     }
     
@@ -175,6 +177,9 @@ class adminpanel extends MY_Controller
     
     function groupe($groupId)
     {
+        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL | USER_RIGHT_VIEW_MEMBER_PART))
+            show_404 ();
+        
         if(!is_numeric($groupId))
             show_404();
         
@@ -202,12 +207,16 @@ class adminpanel extends MY_Controller
         }
         
         $this->twig->set('groupe', $group);
+        $this->twig->set('groupeId', $group->id);
         $this->twig->set('membre', $groupeInfo['membre']);
         $this->twig->render("adminpanel-groupedetail.html.twig");
     }
     
     function updategroup()
     {
+        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL | USER_RIGHT_VIEW_MEMBER_PART))
+            show_404 ();
+        
         if($this->input->post("group_id") === false)
             show_404();
         
@@ -225,11 +234,20 @@ class adminpanel extends MY_Controller
         
         $name = $this->input->post("name");
         if($name !== false)
-        {                       
-            $this->user->updateGroupe($groupId, $name, $right);
+        {
+            if($groupId != 0)
+            {
+                $this->user->updateGroupe($groupId, $name, $right);
+                $this->redirect_meta("Le groupe $name a bien été mis à jour.", $this->config->item('base_url')."/adminpanel/groupe/$groupId");
+            }                
+            else
+            {
+                $this->user->addGroup($name, $right);
+                $this->redirect_meta("Le groupe $name a bien été créer.", $this->config->item('base_url')."/adminpanel/groups");
+            }                
         }
         
-        $this->redirect_meta("Le groupe a été correctement mis à jour.", $this->config->item('base_url')."/adminpanel/groupe/$groupId");
+        $this->redirect_meta("Une erreur de mise à jour s'est produite, les changements sont annulés.", $this->config->item('base_url')."/adminpanel/groupe/$groupId"); //J'aime bien faire flipper les gens :)
     }
     
     function groupeaddfromprofile($userId)
@@ -261,6 +279,15 @@ class adminpanel extends MY_Controller
         $this->user->delGroupMember($userId, $groupId);
         
         $this->redirect_meta("L'utilisateur a été correctement supprimé au groupe", $this->config->item('base_url')."/adminpanel/groupe/$groupId");
+    }
+    
+    public function addgroup()
+    {
+        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL | USER_RIGHT_VIEW_MEMBER_PART))
+            show_404 ();
+        
+        $this->twig->set('groupeId', 0);
+        $this->twig->render("adminpanel-groupedetail.html.twig");
     }
             
     function _notAllowed()

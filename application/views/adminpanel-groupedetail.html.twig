@@ -4,7 +4,7 @@
 <h1 class="text-center">Détail d'un groupe</h1>
 
 <form method="post" action="{{base_url}}/adminpanel/updategroup">
-    <input type="hidden" name="group_id" value="{{groupe.id}}"/>
+    <input type="hidden" name="group_id" value="{{groupeId}}"/>
     <table class="table" style="width: 100%;">
         <tr><td><input type="text" value="{{groupe.nom}}" name="name"/></td></tr>
         <tr><td> <input type="checkbox" id="right-admin" name="right-admin" {%if right_admin_panel==true %} checked="checked" {%endif%}> <label for="right-admin">Peut acceder au panneau d'administration</label></td></tr>

@@ -44,6 +44,7 @@ class MY_Controller extends CI_Controller
         }
         
         $this->twig->set('logged_in', $this->isLogged);
+        $this->twig->set('user_id', $this->userId);
         $this->twig->set('login', $this->username);
         $this->twig->set('prenom', $this->prenom);
         $this->twig->set('nom', $this->nom);

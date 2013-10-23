@@ -32,7 +32,7 @@
                                         {{prenom}} {{nom}}
                                     </a>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Mon compte</a></li>
+                                        <li><a href="{{base_url}}/users/profile/{{user_id}}">Mon compte</a></li>
                                         <li><a href="{{base_url}}/auth/logout">Deconnexion</a></li>
                                     </ul>
                                 </li>
@@ -78,6 +78,10 @@
                 </div>                
             </div> 
          </div>
+        
+        <hr>
+        
+        <p class="text-center">Site codé par <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#97;&#119;&#97;&#99;&#104;&#101;&#117;&#120;&#46;&#117;&#116;&#99;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">Antoine Wacheux</a> pour Chorut's. | <a href="https://github.com/Shiroy/choruts-portail">Depôt GitHub</a> | <a href="https://github.com/Shiroy/choruts-portail/issues">Rapporter un bug ou suggérer une nouvelle fonctionnalité</a></p>
             
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="{{base_url}}/bootstrap/js/bootstrap.js"></script>

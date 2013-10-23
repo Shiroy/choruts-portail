@@ -134,6 +134,11 @@ class user extends CI_Model
     {
         $this->db->query("DELETE FROM user_groups_members WHERE userId=? AND groupId=?", array($userId, $groupId));
     }
+    
+    public function addGroup($name, $right)
+    {
+        $this->db->query("INSERT INTO user_groups (nom, rights) VALUES(?, ?)", array($name, $right));
+    }
 }
 
 ?>
