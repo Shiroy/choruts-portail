@@ -213,6 +213,37 @@ class adminpanel extends MY_Controller
         
         
     }
+    
+    function groupeaddfromprofile($userId)
+    {
+        if(!is_numeric($userId))
+            show_404 ();
+        
+        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL | USER_RIGHT_VIEW_MEMBER_PART))
+            show_404 ();
+        
+        $groupeId = $this->input->post("groupe");
+        
+        if(!is_numeric($groupeId))
+            show_404 ();
+        
+        $this->user->addGroupeMember($userId, $groupeId);
+        
+        $this->redirect_meta("L'utilisateur a été correctement ajouté au groupe", $this->config->item('base_url')."/users/profile/$userId");
+    }
+    
+    public function groupmemberdel($groupId, $userId)
+    {
+        if(!is_numeric($userId) || !is_numeric($groupId))
+            show_404 ();
+        
+        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_ACCES_ADMIN_PANEL | USER_RIGHT_VIEW_MEMBER_PART))
+            show_404 ();
+        
+        $this->user->delGroupMember($userId, $groupId);
+        
+        $this->redirect_meta("L'utilisateur a été correctement supprimé au groupe", $this->config->item('base_url')."/adminpanel/groupe/$groupId");
+    }
             
     function _notAllowed()
     {

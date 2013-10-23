@@ -18,7 +18,7 @@ class users extends MY_Controller{
     
     public function profile($userId)
     {
-        if(!$this->isLogged)
+        if(!$this->isLogged || !$this->user->isAllowedTo($this->userId, USER_RIGHT_VIEW_MEMBER_PART))
             $this->forceAuthentification ();
         
         if(!is_numeric($userId))
@@ -37,6 +37,13 @@ class users extends MY_Controller{
         }
         else
             $this->twig->set("editable", false);
+        
+        if($this->user->isAllowedTo($this->userId, USER_RIGHT_EDIT_MEMBERS | USER_RIGHT_ACCES_ADMIN_PANEL))
+        {
+            $groups = $this->user->getGroupNotIn($userId);
+            $this->twig->set("groupe", $groups);
+            $this->twig->set("groupe_editable", true);
+        }           
         
         $this->twig->render("user-profile.html.twig");
     }

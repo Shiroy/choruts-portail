@@ -41,14 +41,19 @@
                 </select> {%else%} {{profile.type_voix}} {%endif%}</td>
         </tr>
     </table>
-</div>
-    
-    {%if edited==true %}
-    <p class="text-success">Votre profil a bien été mis à jour</p>
-    {%endif%}
-    
+</div>    
     {%if editable==true %}
     <input class="btn btn-primary" type="submit" value="Mettre à jour"/>    
     </form>
     {%endif%}
+
+<form action="{{base_url}}/adminpanel/groupeaddfromprofile/{{userId}}" method="post">
+    <select name="groupe">
+        {%for grp in groupe%}
+        <option value="{{grp.id}}">{{grp.nom}}</option>
+        {%endfor%}
+    </select>
+    <input type="submit" class="btn btn-primary" value="Ajouter au groupe"/>
+</form>
+
 {%endblock%}

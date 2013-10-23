@@ -114,6 +114,21 @@ class user extends CI_Model
         
         return $groupe;
     }
+    
+    public function getGroupNotIn($userId)
+    {
+        return $this->db->query("SELECT id, nom FROM user_groups WHERE id NOT IN (SELECT groupId FROM user_groups_members WHERE userId = ?)", array($userId))->result();
+    }
+    
+    public function addGroupeMember($userId, $groupeId)
+    {
+        $this->db->query("INSERT INTO user_groups_members(userId, groupId) VALUES (?, ?)", array($userId, $groupeId));
+    }
+    
+    public function delGroupMember($userId, $groupId)
+    {
+        $this->db->query("DELETE FROM user_groups_members WHERE userId=? AND groupId=?", array($userId, $groupId));
+    }
 }
 
 ?>
