@@ -18,6 +18,9 @@ class users extends MY_Controller{
     
     public function profile($userId)
     {
+        if(!$this->isLogged)
+            $this->forceAuthentification ();
+        
         if(!is_numeric($userId))
             show_404 ();
         

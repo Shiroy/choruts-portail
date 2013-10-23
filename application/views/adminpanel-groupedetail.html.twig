@@ -1,0 +1,27 @@
+{%extends "adminpanel.html.twig" %}
+
+{%block contenue%}
+<h1 class="text-center">Détail d'un groupe</h1>
+
+<form method="post" action="{{base_url}}/adminpanel/updategroup">
+    <input type="hidden" name="group_id" value="{{groupe.id}}"/>
+    <table class="table" style="width: 100%;">
+        <tr><td><input type="text" value="{{groupe.nom}}" name="name"/></td></tr>
+        <tr><td> <input type="checkbox" id="right-admin" name="right-admin" {%if right_admin_panel==true %} checked="checked" {%endif%}> <label for="right-admin">Peut acceder au panneau d'administration</label></td></tr>
+        <tr><td> <input type="checkbox" id="right-edit-members" name="right-edit-members" {%if right_edit_members==true %} checked="checked" {%endif%}> <label for="right-edit-members">Peut éditer le profil des membres</label></td></tr>
+        <tr><td> <input type="checkbox" id="right-member-part" name="right-member-part" {%if right_member_part==true %} checked="checked" {%endif%}> <label for="right-member-part">Peut voir les parties privées du site</label></td></tr>
+        <tr><td> <input type="checkbox" id="right-publish-news" name="right-publish-news" {%if right_publish_news==true %} checked="checked" {%endif%}> <label for="right-publish-news">Peut publier des news (Non implanter)</label></td></tr>
+    </table>
+    
+    <input type="submit" class="btn btn-primary" value="Editer le groupe"/>
+</form>
+
+<h4>Liste des membres</h4>
+
+<table class="table">
+    {%for m in membre %}
+    <tr><td>{{m.prenom}} {{m.nom}}</td><td><a href="{{base_url}}/adminpanel/groupmemberdel/{{groupe.id}}/{{m.id}}" class="btn btn-danger"><i class="icon-remove icon-white"></i> Supprimer</a></td></tr>
+    {%endfor%}
+</table>
+
+{%endblock contenue%}

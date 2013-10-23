@@ -165,6 +165,54 @@ class adminpanel extends MY_Controller
             $this->user->addUser($user, $pass, $mail, $nom, $prenom);
         }
     }
+    
+    function groups()
+    {
+        $groups = $this->user->getGroups();
+        $this->twig->set("groups", $groups);
+        $this->twig->render("adminpanel-groups.html.twig");
+    }
+    
+    function groupe($groupId)
+    {
+        if(!is_numeric($groupId))
+            show_404();
+        
+        $groupeInfo = $this->user->getGroupeDetail($groupId);
+        if($groupeInfo === false)
+            show_404();
+        
+        $group = $groupeInfo['info'];
+        
+        if($group->rights & USER_RIGHT_ACCES_ADMIN_PANEL)
+        {
+            $this->twig->set("right_admin_panel", true);
+        }
+        if($group->rights & USER_RIGHT_EDIT_MEMBERS)
+        {
+            $this->twig->set("right_edit_members", true);
+        }
+        if($group->right & USER_RIGHT_VIEW_MEMBER_PART)
+        {
+            $this->twig->set("right_view_member_part", true);
+        }
+        if($group->right & USER_RIGHT_PUBLISH_NEWS)
+        {
+            $this->twig->set("right_publish_news", true);
+        }
+        
+        $this->twig->set('groupe', $group);
+        $this->twig->set('membre', $groupeInfo['membre']);
+        $this->twig->render("adminpanel-groupedetail.html.twig");
+    }
+    
+    function updategroup()
+    {
+        if($this->input->post("group_id") === false)
+            show_404();
+        
+        
+    }
             
     function _notAllowed()
     {

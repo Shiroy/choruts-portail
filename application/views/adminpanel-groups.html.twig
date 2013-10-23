@@ -1,0 +1,16 @@
+{%extends "adminpanel.html.twig" %}
+
+{%block contenue%}
+<h1 class="text-center">Gestion des groupes utilisateur</h1>
+
+<p>Les groupes utilisateur permettent d'accorder des autorisations spéciales à certains membres du site</p>
+
+<a href="#" class="btn btn-success"><i class="icon-plus icon-white"></i> Ajouter</a><br/><br/>
+
+<table class="table">
+    {%for group in groups %}
+    <tr><td><a href="{{base_url}}/adminpanel/groupe/{{group.id}}">{{group.nom}}</a></td></tr>
+    {%endfor%}
+</table>
+
+{%endblock%}

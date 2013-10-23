@@ -97,6 +97,23 @@ class user extends CI_Model
         $mail = $casAccount."@utc.fr";
         $this->db->query("INSERT INTO auth_user(user, password, nom, prenom, mail, login_etu) VALUES (?, 'CAS', ?, ?, ?, ?)", array($casAccount, $nom, $prenom, $mail, $casAccount));
     }
+    
+    public function getGroups()
+    {
+        return $this->db->query("SELECT id, nom FROM user_groups ORDER BY nom")->result();
+    }
+    
+    public function getGroupeDetail($groupId)
+    {
+        $result = $this->db->query("SELECT id, nom, rights FROM user_groups WHERE id=?", array($groupId));
+        if($result->num_rows() == 0)
+            return false;
+        
+        $groupe["info"] = $result->row();        
+        $groupe["membre"] = $this->db->query("SELECT id, nom, prenom FROM auth_user INNER JOIN user_groups_members ON id=userId WHERE groupId=?", array($groupId))->result();
+        
+        return $groupe;
+    }
 }
 
 ?>
