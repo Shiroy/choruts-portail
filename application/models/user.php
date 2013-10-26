@@ -60,7 +60,7 @@ class user extends CI_Model
     
     public function profile($userId)
     {
-        $result = $this->db->query("SELECT user, nom, prenom, mail, telephone, type_voix FROM auth_user WHERE id=?", array($userId));
+        $result = $this->db->query("SELECT user, password, nom, prenom, mail, telephone, type_voix FROM auth_user WHERE id=?", array($userId)); //Le champ password permet de savoir si l'utilisateur utilise CAS ou non
         
         if($result->num_rows() == 0)
             return false;

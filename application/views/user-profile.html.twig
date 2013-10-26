@@ -40,20 +40,29 @@
                     <option value="basse" {%if profile.type_voix == "basse"%} selected="selected" {%endif%}>basse</option>
                 </select> {%else%} {{profile.type_voix}} {%endif%}</td>
         </tr>
-    </table>
+    </table>   
 </div>    
     {%if editable==true %}
     <input class="btn btn-primary" type="submit" value="Mettre à jour"/>    
     </form>
     {%endif%}
 
-<form action="{{base_url}}/adminpanel/groupeaddfromprofile/{{userId}}" method="post">
+<table class="table">
+{%if editable==true and profile.password != "CAS"%}
+    <tr><td>
+<form method="post" action="{{base_url}}/users/changepassword">
+    <input type="password" name="newPass"/>
+    <input type="submit" value="Changer le mot de passe" class="btn btn-primary"/>
+</form></td></tr>
+{%endif%}
+
+    <tr><td><form action="{{base_url}}/adminpanel/groupeaddfromprofile/{{userId}}" method="post">
     <select name="groupe">
         {%for grp in groupe%}
         <option value="{{grp.id}}">{{grp.nom}}</option>
         {%endfor%}
     </select>
     <input type="submit" class="btn btn-primary" value="Ajouter au groupe"/>
-</form>
-
+            </form></td></tr>
+</table>
 {%endblock%}
