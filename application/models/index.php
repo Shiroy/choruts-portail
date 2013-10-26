@@ -42,6 +42,11 @@ class Index extends CI_Model
         
         return $result;
     }
+    
+    public function apropos()
+    {
+        return $this->db->query("SELECT content FROM site_string WHERE label='apropos'")->row();
+    }
 }
 
 ?>

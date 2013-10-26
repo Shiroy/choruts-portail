@@ -18,6 +18,16 @@ class choruts extends MY_Controller
         $this->twig->set("news", $news);
         $this->twig->render("index.html.twig");
     }
+    
+    public function apropos()
+    {
+        $this->load->library("bbcode");
+        
+        $apropos = $this->Index->apropos();
+        $apropos->content = $this->bbcode->parse($apropos->content);
+        $this->twig->set("apropos", $apropos->content);
+        $this->twig->render("index-apropos.html.twig");
+    }
 }
 
 ?>
