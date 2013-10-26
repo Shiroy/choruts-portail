@@ -92,6 +92,9 @@ class users extends MY_Controller{
     
     public function changepassword($userId)
     {
+        if(!$this->isLogged)
+            $this->forceAuthentification ();
+        
         if($this->user->isCASUser($userId))
             show_404 ();
         
