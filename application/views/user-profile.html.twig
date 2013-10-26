@@ -55,7 +55,7 @@
     <input type="submit" value="Changer le mot de passe" class="btn btn-primary"/>
 </form></td></tr>
 {%endif%}
-
+{%if groupe_editable==true%}
     <tr><td><form action="{{base_url}}/adminpanel/groupeaddfromprofile/{{userId}}" method="post">
     <select name="groupe">
         {%for grp in groupe%}
@@ -64,5 +64,6 @@
     </select>
     <input type="submit" class="btn btn-primary" value="Ajouter au groupe"/>
             </form></td></tr>
+{%endif%}
 </table>
 {%endblock%}
