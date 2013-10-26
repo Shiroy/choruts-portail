@@ -30,14 +30,13 @@ class auth extends MY_Controller
             {
                 $this->twig->set("error", 1);
                 $this->twig->set("username", $this->input->post('login'));
+                $this->twig->render("login-form.html.twig");
             }
             else
             {
                 $this->session->set_userdata("user_id", $user);
-                $this->redirect_meta("Vous êtes à présent connecté.", $this->config->item('base_url'));
-            }                
-            
-            $this->twig->render("login-form.html.twig"); //If auth sucess, this line should not be executed
+                $this->redirect_meta("Vous êtes à présent connecté.", $this->config->item('base_url'));                
+            }
         }
     }
     
