@@ -23,7 +23,7 @@ class bbcode {
     
     public function parse($s)
     {
-        return $this->bbcode_parser->p($s, 1);
+        return $this->bbcode_parser->p($s, 1, 1, 0, 0);
     }
 }
 
