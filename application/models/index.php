@@ -47,6 +47,11 @@ class Index extends CI_Model
     {
         return $this->db->query("SELECT content FROM site_string WHERE label='apropos'")->row();
     }
+    
+    public function updateApropos($newContent)
+    {
+        $this->db->query("UPDATE site_string SET content=? WHERE label='apropos'", array($newContent));
+    }
 }
 
 ?>

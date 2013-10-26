@@ -10,7 +10,7 @@
         <input type="hidden" name="news_id" value="{{edit}}"/>
     {%endif%}
     <p>Titre : <input type="text" name="news_title" value="{{news.titre}}"/></p>
-    <textarea style="width: 100%;" name="news_content" rows="5">{{news.contenue}}</textarea>
+    <textarea style="width: 100%;" name="news_content" rows="5">{{news.contenue|raw}}</textarea>
     <input type="submit" {%if edit %} value="Mettre à jour" {%else%} value="Publier" {%endif%} class="btn btn-primary"/>
 </form>
 

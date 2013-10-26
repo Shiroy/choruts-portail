@@ -289,6 +289,22 @@ class adminpanel extends MY_Controller
         $this->twig->set('groupeId', 0);
         $this->twig->render("adminpanel-groupedetail.html.twig");
     }
+    
+    public function apropos()
+    {
+        if($this->input->post() === false) //Première appel => formulaire
+        {
+            $texte = $this->Index->apropos();
+            $this->twig->set("apropos", $texte->content);
+            $this->twig->render("adminpanel-apropos.html.twig");
+        }
+        else
+        {
+            $newContent = $this->input->post("apropos-content");
+            $this->Index->updateApropos($newContent);
+            $this->redirect_meta("La page a été correctement mise à jour.", $this->config->item('base_url')."/adminpanel/apropos");
+        }
+    }
             
     function _notAllowed()
     {

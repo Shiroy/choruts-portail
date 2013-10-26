@@ -1,0 +1,10 @@
+{%extends "adminpanel.html.twig"%}
+
+{%block contenue%}
+<h1 class="text-center">Editer la page à propos</h1>
+
+<form method="post" action="{{base_url}}/adminpanel/apropos">
+    <textarea name="apropos-content" style="width: 100%;" rows="20">{{apropos|raw}}</textarea>
+    <input type="submit" value="Mettre à jour" class="btn btn-primary"/>
+</form>
+{%endblock%}
