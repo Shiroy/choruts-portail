@@ -89,6 +89,25 @@ class users extends MY_Controller{
         
         $this->redirect_meta("Votre profil a bien été mis à jour", $this->config->item('base_url')."/users/profile/$userId");
     }
+    
+    public function changepassword($userId)
+    {
+        if($this->user->isCASUser($userId))
+            show_404 ();
+        
+        if(!($this->user->isAllowedTo($userId, USER_RIGHT_EDIT_MEMBERS) || $this->userId==$userId))
+            show_404 ();
+        
+        if($this->input->post("newPass") == false)
+        {
+            $this->redirect_meta("Vous devez saisir un nouveau mot de passe.", $this->config->item('base_url')."/users/profile/$userId");
+            return;
+        }
+        
+        $this->user->updatePassword($userId, $this->input->post("newPass"));
+        
+        $this->redirect_meta("Le mot de passe a bien été changé.", $this->config->item('base_url')."/users/profile/$userId");
+    }
 }
 
 ?>

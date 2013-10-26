@@ -139,6 +139,24 @@ class user extends CI_Model
     {
         $this->db->query("INSERT INTO user_groups (nom, rights) VALUES(?, ?)", array($name, $right));
     }
+    
+    public function isCASUser($user)
+    {
+        return $this->db->query("SELECT 1 FROM auth_user WHERE id=? AND password='CAS'", array($user))->num_rows() != 0;
+    }
+    
+    public function updatePassword($userId, $newPass)
+    {
+        $user = $this->db->query("SELECT user FROM auth_user WHERE id=?", array($userId))->row();
+        if(empty($user))
+            return;
+        
+        $username = $user->user; //On calcule le nouveau hash
+        
+        $hash = strtoupper(sha1(strtoupper($username).":".$newPass));
+        
+        $this->db->query("UPDATE auth_user SET password=? WHERE id=?", array($hash, $userId));
+    }
 }
 
 ?>

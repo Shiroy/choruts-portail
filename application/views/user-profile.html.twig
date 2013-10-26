@@ -50,7 +50,7 @@
 <table class="table">
 {%if editable==true and profile.password != "CAS"%}
     <tr><td>
-<form method="post" action="{{base_url}}/users/changepassword">
+<form method="post" action="{{base_url}}/users/changepassword/{{userId}}">
     <input type="password" name="newPass"/>
     <input type="submit" value="Changer le mot de passe" class="btn btn-primary"/>
 </form></td></tr>
