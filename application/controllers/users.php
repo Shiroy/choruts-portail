@@ -53,7 +53,7 @@ class users extends MY_Controller{
         if($this->input->post() === false)
             return;
         
-        if(!$this->isLogged || (!$this->user->isAllowedTo($this->userId, USER_RIGHT_VIEW_MEMBER_PART) && $userId != $this->userId))
+        if(!$this->isLogged || (!$this->user->isAllowedTo($this->userId, USER_RIGHT_EDIT_MEMBERS) && $userId != $this->userId))
             $this->forceAuthentification ();        
         
         $this->load->library("form_validation");
@@ -63,9 +63,6 @@ class users extends MY_Controller{
         
         $userId = $this->input->post("userId");
         if(!is_numeric($userId))
-            return;
-        
-        if($userId != $this->userId && !$this->user->isAllowedTo($this->userId, USER_RIGHT_EDIT_MEMBERS))
             return;
         
         $this->form_validation->set_rules('nom', 'nom', 'required|alpha');
