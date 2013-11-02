@@ -53,7 +53,7 @@ class user extends CI_Model
         
         $firtstIndex = ($page-1) * $userPerPage;
         
-        $result['users'] = $this->db->query("SELECT id, user, nom, prenom, mail FROM auth_user LIMIT $firtstIndex, $userPerPage")->result();
+        $result['users'] = $this->db->query("SELECT id, user, password, nom, prenom, mail FROM auth_user LIMIT $firtstIndex, $userPerPage")->result();
         
         return $result;
     }
