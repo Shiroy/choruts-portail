@@ -68,7 +68,7 @@ class users extends MY_Controller{
         $this->form_validation->set_rules('nom', 'nom', 'required|alpha');
         $this->form_validation->set_rules('prenom', 'prenom', 'required|alpha');
         $this->form_validation->set_rules('mail', "e-mail", 'required|valid_email');
-        $this->form_validation->set_rules('telephone', 'numéros de téléphone', 'numeric|exact_length[10]');
+        $this->form_validation->set_rules('telephone', 'numéros de téléphone', 'numeric');
         
         if($this->form_validation->run() == false)
         {
