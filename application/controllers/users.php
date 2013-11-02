@@ -95,7 +95,7 @@ class users extends MY_Controller{
         if($this->user->isCASUser($userId))
             show_404 ();
         
-        if(!($this->user->isAllowedTo($userId, USER_RIGHT_EDIT_MEMBERS) || $this->userId==$userId))
+        if(!$this->user->isAllowedTo($this->userId, USER_RIGHT_EDIT_MEMBERS) && $this->userId!=$userId)
             show_404 ();
         
         if($this->input->post("newPass") == false)
