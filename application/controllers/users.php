@@ -53,7 +53,7 @@ class users extends MY_Controller{
         if($this->input->post() === false)
             return;
         
-        if(!$this->isLogged)
+        if(!$this->isLogged || (!$this->user->isAllowedTo($this->userId, USER_RIGHT_VIEW_MEMBER_PART) && $userId != $this->userId))
             $this->forceAuthentification ();        
         
         $this->load->library("form_validation");
