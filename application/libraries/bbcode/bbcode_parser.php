@@ -483,8 +483,8 @@
 
 define('SECURITY_CODE', __LINE__);
 
-//error_reporting(E_ALL ^ E_NOTICE);
 
+//error_reporting(error_reporting() & ~(E_DEPRECATED|E_NOTICE));
 
 
 function getRpPath() {
@@ -2173,16 +2173,6 @@ function __destruct() {
 } // __destruct()...
 
 } // parser...
-
-
-
-if ($_GET['smiley'] != "") {
-
-	$parser = new parser;
-
-	$parser->showSmileys();
-
-}
 
 
 

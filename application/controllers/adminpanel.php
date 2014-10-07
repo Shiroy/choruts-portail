@@ -205,6 +205,14 @@ class adminpanel extends MY_Controller
         {
             $this->twig->set("right_publish_news", true);
         }
+        if($group->rights & USER_RIGHT_VIEW_FILE)
+        {
+            $this->twig->set("right_view_files", true);            
+        }
+        if($group->rights & USER_RIGHT_EDIT_FILES)
+        {
+            $this->twig->set("right_edit_files", true);            
+        }
         
         $this->twig->set('groupe', $group);
         $this->twig->set('groupeId', $group->id);
@@ -231,6 +239,10 @@ class adminpanel extends MY_Controller
             $right |= USER_RIGHT_VIEW_MEMBER_PART;
         if($this->input->post("right-publish-news") !== false)
             $right |= USER_RIGHT_PUBLISH_NEWS;
+        if($this->input->post("right-view-files") !== false)
+            $right |= USER_RIGHT_VIEW_FILE;
+        if($this->input->post("right-edit-files") !== false)
+            $right |= USER_RIGHT_EDIT_FILES;
         
         $name = $this->input->post("name");
         if($name !== false)

@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://localhost/choruts/choruts-portail';
+$config['base_url']	= 'http://localhost/choruts';
 
 $config['login_url'] = "http://localhost/choruts/choruts-login/";
 
@@ -368,3 +368,5 @@ define("USER_RIGHT_ACCES_ADMIN_PANEL", 0x1);
 define("USER_RIGHT_EDIT_MEMBERS", 0x2);
 define("USER_RIGHT_VIEW_MEMBER_PART", 0x4);
 define("USER_RIGHT_PUBLISH_NEWS", 0x8);
+define("USER_RIGHT_VIEW_FILE", 0x10);
+define("USER_RIGHT_EDIT_FILES", 0x20);

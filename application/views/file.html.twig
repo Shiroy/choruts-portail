@@ -1,0 +1,12 @@
+{%extends "header.html.twig"%}
+
+{%block menu%}
+<div class="well sidebar-nav"> 
+    <ul class="nav nav-list">
+        {%if view_private_part == true %}        
+        <li class="nav-header">Gestionnaire de fichier</li>   
+        <li><a href="{{base_url}}/files">Revenir à la racine</a></li>
+        {%endif%}
+    </ul>
+</div>            
+{%endblock%}

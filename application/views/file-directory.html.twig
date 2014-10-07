@@ -1,0 +1,74 @@
+{%extends "file.html.twig"%}
+
+{%block contenue%}
+
+<p><b>Astuce</b> : Pour linker un fichier ou un dossier dans un mail, faire un clic droit sur le nom et copier l'adresse du lien dans le mail.</p>
+<div class="well">
+    <div class="row-fluid">
+        <div class = "row-fluid">
+        <div class="span4">
+            {%if parent%}
+            <a href="{{base_url}}/files/directory/{{parent}}" class="btn btn-primary">Revenir en arrière</a>
+            {%else%}
+            <a href="#" class="btn btn-primary disabled">Revenir en arrière</a> 
+            {%endif%}
+            {%if canEdit%}
+            <a href="#" class="btn" id="new-dir-btn">Nouveau dossier</a>
+            {%endif%}
+        </div>
+        <div class="span6">
+            {%if canEdit %}
+            <form method="post" action="{{base_url}}/files/upload/{{current_dir_id}}" enctype="multipart/form-data">
+                <input type="file" name="file_to_upload"/>
+                <input type="submit" class="btn-primary btn"/>
+            </form>
+            {% endif %}
+        </div>
+        <table class="table">
+            <tr>
+                <th class="span7">Nom</th>
+                <th class="span1">Taille</th>
+                <th class="span4">Actions</th>
+            </tr>
+
+            {%for dir in directories%}
+            <tr>
+                <td><a href="{{base_url}}/files/directory/{{dir.id}}"><i class="icon-folder-open"></i>&nbsp;&nbsp;{{dir.name}}</a></td>
+                <td></td>
+                <td>{%if canEdit %}<a href="{{base_url}}/files/rmdir/{{dir.id}}" class="btn btn-danger">Supprimer</a>{%endif%}</td>
+            </tr>
+            {%endfor%}
+
+            {%for file in files%}
+            <tr>
+                <td><a href="{{base_url}}/files/content/{{file.id}}" class="file-link">{{file.name}}</a></td>
+                <td>{{file.taille}} Mo</td>
+                <td><a href="{{base_url}}/files/download/{{file.id}}" class="btn btn-primary">Télécharger</a>{%if canEdit %}&nbsp;&nbsp;<a href="{{base_url}}/files/rm/{{file.id}}" class="btn btn-danger">Supprimer</a>{%endif%}</td>
+            </tr>
+            {%endfor%}
+
+        </table>
+
+        {%if canEdit %}
+        <div id="new-dir" style="display: none">
+            <span>Nouveau dossier</span>
+            <span>
+                <form method="post" action="{{base_url}}/files/newdir">
+                    <input type="text" name="new_dir_name" class="input-large"/>
+                    <input type="submit" class="btn btn-success" value="Créer le dossier"/>
+                </form>
+                <a href="#" class="btn btn-danger" id="new-dir-cancel">Annuler</a>
+            </span>
+        </div>
+        {% endif %}
+    </div>
+    <div>
+        <audio controls="true" id="player">Un navigateur plus récent est nécéssaire pour la pré-écoute en ligne</audio>
+    </div>
+</div>
+
+{%endblock%}
+
+{%block scripts%}
+<script src="{{base_url}}/assets/files.js"></script>
+{%endblock%}
