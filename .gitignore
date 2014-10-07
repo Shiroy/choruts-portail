@@ -2,4 +2,4 @@ application/config/database.php
 /nbproject/
 application/cache
 application/views/maquette.twig
-assets/*
+assets/uploaded_files
