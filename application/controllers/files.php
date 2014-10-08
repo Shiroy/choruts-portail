@@ -78,7 +78,10 @@ class files extends MY_Controller
         $this->upload->initialize($config);
         
         if ( ! $this->upload->do_upload("file_to_upload"))
+        {
             $this->redirect_meta ($this->upload->display_errors(), base_url ("files/"));
+            exit();
+        }
         
         $upload_data = $this->upload->data();
         
@@ -129,7 +132,7 @@ class files extends MY_Controller
         $this->redirect_meta("Le dossier a été correctement créé", base_url("files/directory/$parentDir"));
     }
 
-        public function rm($id)
+    public function rm($id)
     {
         if(is_null($id) or !is_numeric($id))
             show_404 ();
