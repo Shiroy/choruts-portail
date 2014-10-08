@@ -52,6 +52,7 @@ class MY_Controller extends CI_Controller
         $this->twig->set("view_private_part", $this->allowPrivatePart);
         
         $this->twig->set('base_url', $this->config->item('base_url'));
+        $this->twig->set('current_url', current_url());
     }
     
     public function forceAuthentification()
@@ -65,6 +66,17 @@ class MY_Controller extends CI_Controller
         $this->twig->set("redirect_msg", $msg);
         $this->twig->set("redirect_url", $link);
         $this->twig->render("redirect_meta.html.twig");
+    }
+    
+    public function confirm($message)
+    {
+        if($this->session->flashdata("confirm") === false)
+        {
+            $this->session->set_flashdata("confirm", true);
+            $this->twig->set("confirm_msg", $message);
+            $this->twig->render("confirm.html.twig");
+            exit();
+        }
     }
 }
 

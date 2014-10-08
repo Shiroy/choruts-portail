@@ -64,7 +64,10 @@ class files extends MY_Controller
     }
     
     public function upload($dirId=NULL)
-    { 
+    {
+        if(is_null($dirId) or !is_numeric($dirId))
+            show_404 ();
+        
         if(!$this->canEdit)
             show_404 ();
         
@@ -84,19 +87,97 @@ class files extends MY_Controller
         $this->redirect_meta ("Le fichier a été correctement téléchargé", base_url("files/directory/$dirId"));
     }
     
-    public function content($id)
-    {        
+    public function content($id=NULL)
+    {
+        if(is_null($id) or !is_numeric($id))
+            show_404 ();
+        
         $file = $this->file->fileDownloadInfo($id);
         header("Content-type: ".mime_content_type($file->path));
         echo file_get_contents($file->path);
         exit();
     }
     
-    public function download($id)
+    public function download($id=NULL)
     {
+        if(is_null($id) or !is_numeric($id))
+            show_404 ();
+        
         $this->load->helper("download");
         $file = $this->file->fileDownloadInfo($id);
         force_download($file->name, file_get_contents($file->path));
+    }
+    
+    public function newDir()
+    {
+        if(!$this->canEdit)
+            show_404 ();
+        
+        $this->load->library("form_validation");
+        $this->form_validation->set_rules('new_dir_name', 'nom du nouveau dossier', 'required');
+        $this->form_validation->set_rules('parent_dir', 'parent_dir', 'required|numeric');
+        if($this->form_validation->run() == false)
+        {
+            $this->redirect_meta(validation_errors(), base_url());
+        }
+        
+        $newDirName = $this->input->post("new_dir_name");
+        $parentDir = $this->input->post("parent_dir");
+        
+        $this->file->createDir($newDirName, $parentDir);
+        
+        $this->redirect_meta("Le dossier a été correctement créé", base_url("files/directory/$parentDir"));
+    }
+
+        public function rm($id)
+    {
+        if(is_null($id) or !is_numeric($id))
+            show_404 ();
+        
+        if(!$this->canEdit)
+            show_404 ();
+        
+        $this->confirm("Voulez vous vraiment supprimer ce fichier ? Cette action est irréversible !!");
+        
+        $parentId = $this->file->removeFile($id);        
+        
+        $this->garbageCollector();
+        
+        $this->redirect_meta("Le fichier a été correctement supprimé", base_url("files/directory/$parentId"));
+    }
+    
+    public function rmdir($id)
+    {
+        if(is_null($id) or !is_numeric($id))
+            show_404 ();
+        
+        if(!$this->canEdit)
+            show_404 ();
+        
+        $this->confirm("Voulez vous vraiment supprimer ce dossier et tout son contenue ? Cette action est irréversible !!");
+        
+        $parentId = $this->file->removeDirectory($id);        
+        
+        $this->garbageCollector();
+        
+        $this->redirect_meta("Le dossier a été correctement supprimé", base_url("files/directory/$parentId"));
+    }
+    
+    private function garbageCollector() //Purge les fichiers non référencés du disuqe serveur
+    {
+        $file_to_keep = $this->file->getAllPath();
+        
+        for($i = 0 ; $i < count($file_to_keep) ; $i++)
+            $file_to_keep[$i] = basename($file_to_keep[$i]->path);
+        
+        $all_file = array_diff(scandir("assets/uploaded_files/", SCANDIR_SORT_NONE), array(".", ".."));
+        
+        $file_to_remove = array_diff($all_file, $file_to_keep);
+        
+        foreach ($file_to_remove as $f)
+        {
+            unlink("assets/uploaded_files/".$f);
+        }
     }
 }
 

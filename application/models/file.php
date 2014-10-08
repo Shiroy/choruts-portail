@@ -46,6 +46,30 @@ class file extends CI_Model
     {
         return $this->db->query("SELECT name, path FROM choruts_file_files WHERE id=".$this->db->escape($id))->row();
     }
+    
+    public function removeFile($id)
+    {
+        $parent = $this->db->query("SELECT directory FROM choruts_file_files WHERE id=".$id)->row();
+        $this->db->query("DELETE FROM choruts_file_files WHERE id=".$id); //Verif faites en amaont
+        return $parent->directory;
+    }
+    
+    public function removeDirectory($id)
+    {
+        $parent = $this->db->query("SELECT parent FROM choruts_file_directories WHERE id=".$id)->row();
+        $this->db->query("DELETE FROM choruts_file_directories WHERE id=".$id." AND parent NOT NULL"); //Verif faites en amaont
+        return $parent->parent;
+    }
+    
+    public function createDir($newDirName, $parentDir)
+    {
+        $this->db->query("INSERT INTO choruts_file_directories(name, parent) VALUES(".$this->db->escape("$newDirName").", ".$this->db->escape($parentDir).")");
+    }
+
+        public function getAllPath()
+    {
+        return $this->db->query("SELECT path FROM choruts_file_files")->result();
+    }
 }
 
 ?>

@@ -55,6 +55,7 @@
             <span>
                 <form method="post" action="{{base_url}}/files/newdir">
                     <input type="text" name="new_dir_name" class="input-large"/>
+                    <input type="hidden" name="parent_dir" value="{{current_dir_id}}"/>
                     <input type="submit" class="btn btn-success" value="Créer le dossier"/>
                 </form>
                 <a href="#" class="btn btn-danger" id="new-dir-cancel">Annuler</a>
