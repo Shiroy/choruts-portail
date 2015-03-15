@@ -119,7 +119,7 @@ class adminpanel extends MY_Controller
         if($page < 1)
             $page = 1;
         
-        define("USER_PER_PAGE", 20);
+        define("USER_PER_PAGE", 21);
         
         $users = $this->user->getUsers($page, USER_PER_PAGE);
         
