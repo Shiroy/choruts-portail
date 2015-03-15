@@ -121,7 +121,7 @@ class adminpanel extends MY_Controller
         
         define("USER_PER_PAGE", 20);
         
-        $users = $this->user->getUsers(1, USER_PER_PAGE);
+        $users = $this->user->getUsers($page, USER_PER_PAGE);
         
         $nbPage = ($users['count'] / USER_PER_PAGE) + 1;        
         
