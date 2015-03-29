@@ -65,7 +65,7 @@ class users extends MY_Controller{
         
         $this->load->library("form_validation");        
         
-        $this->form_validation->set_rules('nom', 'nom', 'required|alpha');
+        $this->form_validation->set_rules('nom', 'nom', 'required');
         $this->form_validation->set_rules('prenom', 'prenom', 'required|alpha');
         $this->form_validation->set_rules('mail', "e-mail", 'required|valid_email');
         $this->form_validation->set_rules('telephone', 'numéros de téléphone', 'numeric');
